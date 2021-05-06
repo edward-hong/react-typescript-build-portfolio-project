@@ -20,7 +20,10 @@ interface SearchRepositoriesErrorAction {
 
 const reducer = (
   state: RepositoriesState,
-  action: Action
+  action:
+    | SearchRepositoriesAction
+    | SearchRepositoriesSuccessAction
+    | SearchRepositoriesErrorAction
 ): RepositoriesState => {
   switch (action.type) {
     case 'search_repositories':
