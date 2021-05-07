@@ -17,8 +17,13 @@ const App = () => {
     startService()
   }, [])
 
-  const onClick = () => {
-    console.log(esbuild)
+  const onClick = async () => {
+    const result = await esbuild.transform(input, {
+      loader: 'jsx',
+      target: 'es2015',
+    })
+
+    setCode(result.code)
   }
 
   return (
