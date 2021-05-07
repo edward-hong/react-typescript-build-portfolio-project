@@ -18,7 +18,7 @@ const App = () => {
   }, [])
 
   const onClick = () => {
-    console.log(input)
+    console.log(esbuild)
   }
 
   return (
