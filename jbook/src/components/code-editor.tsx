@@ -1,21 +1,14 @@
-import MonacoEditor from '@monaco-editor/react'
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
+import MonacoEditor, { OnChange } from '@monaco-editor/react'
 
 interface CodeEditorProps {
   initialValue: string
-  onChange(value: string | undefined): void
+  onChange: OnChange
 }
 
 const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
-  const handleChange = (
-    value: string | undefined,
-    ev: monaco.editor.IModelContentChangedEvent
-  ): void => {
-    onChange(value)
-  }
   return (
     <MonacoEditor
-      onChange={handleChange}
+      onChange={onChange}
       value={initialValue}
       theme="vs-dark"
       language="javascript"
@@ -29,6 +22,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
         fontSize: 16,
         scrollBeyondLastLine: false,
         automaticLayout: true,
+        tabSize: 2,
       }}
     />
   )
