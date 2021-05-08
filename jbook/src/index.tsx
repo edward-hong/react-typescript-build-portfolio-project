@@ -8,7 +8,6 @@ import { fetchPlugin } from './plugins/fetch-plugin'
 const App = () => {
   const iframe = useRef<any>()
   const [input, setInput] = useState('')
-  const [code, setCode] = useState('')
 
   const startService = async () => {
     await esbuild.initialize({
@@ -35,7 +34,6 @@ const App = () => {
       },
     })
 
-    // setCode(result.outputFiles[0].text)
     iframe.current.contentWindow.postMessage(result.outputFiles[0].text, '*')
   }
 
@@ -68,8 +66,12 @@ const App = () => {
       <div>
         <button onClick={onClick}>Submit</button>
       </div>
-      <pre>{code}</pre>
-      <iframe ref={iframe} srcDoc={html} sandbox="allow-scripts" />
+      <iframe
+        title="preview"
+        ref={iframe}
+        srcDoc={html}
+        sandbox="allow-scripts"
+      />
     </div>
   )
 }
