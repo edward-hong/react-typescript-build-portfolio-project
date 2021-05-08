@@ -1,9 +1,13 @@
 import { useRef } from 'react'
 import MonacoEditor, { OnChange, OnMount } from '@monaco-editor/react'
+import Highlighter from 'monaco-jsx-highlighter'
 import prettier from 'prettier'
 import parser from 'prettier/parser-babel'
+import { parse } from '@babel/parser'
+import traverse from '@babel/traverse'
 
 import './code-editor.css'
+import './syntax.css'
 
 interface CodeEditorProps {
   initialValue: string
@@ -12,9 +16,33 @@ interface CodeEditorProps {
 
 const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
   const editorRef = useRef<any>()
+  const highlighterRef = useRef<any>()
+  const disableHighlightRef = useRef<any>()
 
-  const onEditorDidMount: OnMount = editor => {
+  const babelParse = (code: string) =>
+    parse(code, {
+      sourceType: 'module',
+      plugins: ['jsx'],
+    })
+
+  const onEditorDidMount: OnMount = (editor, monaco) => {
     editorRef.current = editor
+
+    const highlighter = new Highlighter(monaco, babelParse, traverse, editor)
+
+    highlighterRef.current = highlighter
+
+    const disable = highlighter.highLightOnDidChangeModelContent(
+      100,
+      () => {},
+      () => {},
+      undefined,
+      () => {}
+    )
+
+    disableHighlightRef.current = disable
+
+    highlighter.addJSXCommentCommand()
   }
 
   const onFormatClick = () => {
@@ -33,6 +61,19 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
     editorRef.current.setValue(formatted)
   }
 
+  const handleChange: OnChange = (value, ev) => {
+    onChange(value, ev)
+    disableHighlightRef.current()
+
+    highlighterRef.current.highLightOnDidChangeModelContent(
+      100,
+      () => {},
+      () => {},
+      undefined,
+      () => {}
+    )
+  }
+
   return (
     <div className="editor-wrapper">
       <button
@@ -42,7 +83,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
         Format
       </button>
       <MonacoEditor
-        onChange={onChange}
+        onChange={handleChange}
         onMount={onEditorDidMount}
         value={initialValue}
         theme="vs-dark"
