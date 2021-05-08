@@ -8,7 +8,7 @@ import { fetchPlugin } from './plugins/fetch-plugin'
 
 const App = () => {
   const iframe = useRef<any>()
-  const [input, setInput] = useState('')
+  const [input, setInput] = useState<string | undefined>('')
 
   const startService = async () => {
     await esbuild.initialize({
@@ -60,7 +60,10 @@ const App = () => {
 
   return (
     <div>
-      <CodeEditor initialValue="const a = 1;" />
+      <CodeEditor
+        initialValue="const a = 1;"
+        onChange={value => setInput(value)}
+      />
       <textarea
         value={input}
         onChange={e => setInput(e.target.value)}
