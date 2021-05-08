@@ -1,41 +1,19 @@
 import 'bulmaswatch/superhero/bulmaswatch.min.css'
-import * as esbuild from 'esbuild-wasm'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import ReactDOM from 'react-dom'
 
 import CodeEditor from './components/code-editor'
 import Preview from './components/preview'
-import { unpkgPathPlugin } from './plugins/unpkg-path-plugin'
-import { fetchPlugin } from './plugins/fetch-plugin'
+import bundler from './bundler'
 
 const App = () => {
   const [input, setInput] = useState<string | undefined>('')
   const [code, setCode] = useState('')
 
-  const startService = async () => {
-    await esbuild.initialize({
-      worker: true,
-      wasmURL: 'https://unpkg.com/esbuild-wasm@0.11.20/esbuild.wasm',
-    })
-  }
-
-  useEffect(() => {
-    startService()
-  }, [])
-
   const onClick = async () => {
-    const result = await esbuild.build({
-      entryPoints: ['index.js'],
-      bundle: true,
-      write: false,
-      plugins: [unpkgPathPlugin(), fetchPlugin(input)],
-      define: {
-        'process.env.NODE_ENV': '"production"',
-        global: 'window',
-      },
-    })
+    const output = await bundler(input)
 
-    setCode(result.outputFiles[0].text)
+    setCode(output)
   }
 
   return (
