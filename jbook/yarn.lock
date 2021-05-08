@@ -4407,10 +4407,10 @@ es6-symbol@^3.1.1, es6-symbol@~3.1.3:
     d "^1.0.1"
     ext "^1.1.2"
 
-esbuild-wasm@^0.11.19:
-  version "0.11.19"
-  resolved "https://registry.yarnpkg.com/esbuild-wasm/-/esbuild-wasm-0.11.19.tgz#28f3ad41827835b97aa8a310ae3520ca5460e8d1"
-  integrity sha512-d4s3fcIBG9CL/h5kKfXHpkztyMhs71anqdszND1Zfr4na1bhMGAb+VyEMBbt2/0ft5HtcsOYBqXsjNPNWTC29w==
+esbuild-wasm@^0.11.20:
+  version "0.11.20"
+  resolved "https://registry.yarnpkg.com/esbuild-wasm/-/esbuild-wasm-0.11.20.tgz#2ce866759523c28d470aee7e1c70fbf3a7abd813"
+  integrity sha512-4qzVvcX6jKu3CF/0nor4xeAfpzKHbsX8HRWbro48kzbfzM83Rwb7ne+GrPyVHtfRJdlz1iyoOKDUf2v90Xw37Q==
 
 escalade@^3.0.2, escalade@^3.1.1:
   version "3.1.1"
