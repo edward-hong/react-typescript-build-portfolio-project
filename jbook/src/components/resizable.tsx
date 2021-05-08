@@ -10,22 +10,24 @@ const Resizable: React.FC<ResizableProps> = ({ direction, children }) => {
   let resizableProps: ResizableBoxProps
 
   if (direction === 'horizontal') {
-    resizableProps = {}
+    resizableProps = {
+      height: Infinity,
+      width: window.innerWidth * 0.75,
+      resizeHandles: ['e'],
+      maxConstraints: [window.innerWidth * 0.2, Infinity],
+      minConstraints: [window.innerWidth * 0.75, Infinity],
+    }
   } else {
-    resizableProps = {}
+    resizableProps = {
+      height: 300,
+      width: Infinity,
+      resizeHandles: ['s'],
+      maxConstraints: [Infinity, window.innerHeight * 0.9],
+      minConstraints: [Infinity, 24],
+    }
   }
 
-  return (
-    <ResizableBox
-      height={300}
-      width={Infinity}
-      resizeHandles={['s']}
-      maxConstraints={[Infinity, window.innerHeight * 0.9]}
-      minConstraints={[Infinity, 24]}
-    >
-      {children}
-    </ResizableBox>
-  )
+  return <ResizableBox {...resizableProps}>{children}</ResizableBox>
 }
 
 export default Resizable
