@@ -1,15 +1,16 @@
 import 'bulmaswatch/superhero/bulmaswatch.min.css'
 import * as esbuild from 'esbuild-wasm'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 
 import CodeEditor from './components/code-editor'
+import Preview from './components/preview'
 import { unpkgPathPlugin } from './plugins/unpkg-path-plugin'
 import { fetchPlugin } from './plugins/fetch-plugin'
 
 const App = () => {
-  const iframe = useRef<any>()
   const [input, setInput] = useState<string | undefined>('')
+  const [code, setCode] = useState('')
 
   const startService = async () => {
     await esbuild.initialize({
@@ -23,8 +24,6 @@ const App = () => {
   }, [])
 
   const onClick = async () => {
-    iframe.current.srcdoc = html
-
     const result = await esbuild.build({
       entryPoints: ['index.js'],
       bundle: true,
@@ -36,28 +35,8 @@ const App = () => {
       },
     })
 
-    iframe.current.contentWindow.postMessage(result.outputFiles[0].text, '*')
+    setCode(result.outputFiles[0].text)
   }
-
-  const html = `
-    <html>
-      <head></head>
-      <body>
-        <div id="root"></div>
-        <script>
-          window.addEventListener('message', (event) => {
-            try {
-              eval(event.data)
-            } catch (err) {
-              const root = document.querySelector('#root')
-              root.innerHTML = '<div style="color: red;"><h4>Runtime Error</h4>' + err + '</div>'
-              console.error(err)
-            }
-          }, false)
-        </script>
-      </body>
-    </html>
-  `
 
   return (
     <div>
@@ -65,19 +44,10 @@ const App = () => {
         initialValue="const a = 1;"
         onChange={value => setInput(value)}
       />
-      <textarea
-        value={input}
-        onChange={e => setInput(e.target.value)}
-      ></textarea>
       <div>
         <button onClick={onClick}>Submit</button>
       </div>
-      <iframe
-        title="preview"
-        ref={iframe}
-        srcDoc={html}
-        sandbox="allow-scripts"
-      />
+      <Preview code={code} />
     </div>
   )
 }
