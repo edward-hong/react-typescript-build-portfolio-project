@@ -31,7 +31,18 @@ const reducer = produce((state: CellsState = initialState, action: Action) => {
       state.order = state.order.filter(id => id !== action.payload)
       break
     case ActionType.MOVE_CELL:
-      return state
+      const { direction } = action.payload
+      const index = state.order.findIndex(id => id === action.payload.id)
+      const targetIndex = direction === 'up' ? index - 1 : index + 1
+
+      if (targetIndex < 0 || targetIndex > state.order.length - 1) {
+        break
+      }
+
+      state.order[index] = state.order[targetIndex]
+      state.order[targetIndex] = action.payload.id
+
+      break
     case ActionType.INSERT_CELL_BEFORE:
       return state
     default:
