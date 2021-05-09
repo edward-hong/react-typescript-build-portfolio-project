@@ -8,12 +8,14 @@ import bundler from '../bundler'
 const CodeCell = () => {
   const [input, setInput] = useState<string | undefined>('')
   const [code, setCode] = useState('')
+  const [err, setErr] = useState('')
 
   useEffect(() => {
     const timer = setTimeout(async () => {
       const output = await bundler(input)
 
-      setCode(output)
+      setCode(output.code)
+      setErr(output.err)
     }, 1000)
 
     return () => {
