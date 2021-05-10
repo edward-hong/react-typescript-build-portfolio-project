@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import CodeEditor from './code-editor'
 import Resizable from './resizable'
 import Preview from './preview'
-import bundler from '../bundler'
+import { bundler } from '../bundler'
 
 const CodeCell = () => {
   const [input, setInput] = useState<string | undefined>('')
