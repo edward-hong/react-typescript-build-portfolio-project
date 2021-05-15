@@ -1,4 +1,5 @@
 import CellListItem from './cell-list-item'
+import AddCell from './add-cell'
 import { useTypedSelector } from '../hooks/use-typed-selector'
 
 const CellList: React.FC = () => {
@@ -10,10 +11,18 @@ const CellList: React.FC = () => {
   })
 
   const renderedCells = cells?.map(cell => (
-    <CellListItem key={cell.id} cell={cell} />
+    <>
+      <AddCell nextCellId={cell.id} />
+      <CellListItem key={cell.id} cell={cell} />
+    </>
   ))
 
-  return <div>{renderedCells}</div>
+  return (
+    <div>
+      {renderedCells}
+      <AddCell nextCellId={null} />
+    </div>
+  )
 }
 
 export default CellList
