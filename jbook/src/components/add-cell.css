@@ -1,0 +1,12 @@
+.add-cell {
+  position: relative;
+}
+
+.add-cell .divider {
+  position: absolute;
+  top: 50%;
+  bottom: 50%;
+  border-bottom: 1px solid gray;
+  z-index: -1;
+  width: 100%;
+}
