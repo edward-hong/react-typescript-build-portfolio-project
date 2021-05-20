@@ -5,14 +5,14 @@ import AddCell from './add-cell'
 import { useTypedSelector } from '../hooks/use-typed-selector'
 
 const CellList: React.FC = () => {
-  const cells = useTypedSelector(state => {
+  const cells = useTypedSelector((state) => {
     if (state.cells) {
       const { order, data } = state.cells
-      return order.map(id => data[id])
+      return order.map((id) => data[id])
     }
   })
 
-  const renderedCells = cells?.map(cell => (
+  const renderedCells = cells?.map((cell) => (
     <Fragment key={cell.id}>
       <AddCell nextCellId={cell.id} />
       <CellListItem cell={cell} />
@@ -22,7 +22,7 @@ const CellList: React.FC = () => {
   return (
     <div>
       {renderedCells}
-      <AddCell nextCellId={null} />
+      <AddCell forceVisible={cells?.length === 0} nextCellId={null} />
     </div>
   )
 }

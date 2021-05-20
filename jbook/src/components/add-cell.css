@@ -4,7 +4,8 @@
   transition: opacity 0.3s;
 }
 
-.add-cell:hover {
+.add-cell:hover,
+.add-cell.force-visible {
   opacity: 1;
 }
 
