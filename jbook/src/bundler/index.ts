@@ -23,6 +23,8 @@ export const bundler = async (rawCode: string | undefined) => {
         'process.env.NODE_ENV': '"production"',
         global: 'window',
       },
+      jsxFactory: '_React.createElement',
+      jsxFragment: '_React.Fragment',
     })
 
     return {
