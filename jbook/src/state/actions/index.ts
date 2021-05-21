@@ -35,7 +35,7 @@ export interface UpdateCellAction {
 export interface BundleStartAction {
   type: ActionType.BUNDLE_START
   payload: {
-    id: string
+    cellId: string
   }
 }
 
