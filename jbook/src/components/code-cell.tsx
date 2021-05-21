@@ -18,7 +18,6 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
       return state.bundles[cell.id]
     }
   })
-  console.log(bundle)
 
   useEffect(() => {
     const timer = setTimeout(async () => {
@@ -28,7 +27,7 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
     return () => {
       clearTimeout(timer)
     }
-  }, [cell.content, cell.id])
+  }, [cell.content, cell.id, createBundle])
 
   return (
     <div>
@@ -46,7 +45,7 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
               onChange={(value) => updateCell(cell.id, value || '')}
             />
           </Resizable>
-          {/* <Preview code={code} err={err} /> */}
+          {bundle && <Preview code={bundle.code} err={bundle.err} />}
         </div>
       </Resizable>
     </div>
