@@ -20,6 +20,26 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
       return state.bundles[cell.id]
     }
   })
+  const cumulativeCode = useTypedSelector((state) => {
+    if (state && state.cells) {
+      const { data, order } = state.cells
+      const orderedCells = order.map((id) => data[id])
+
+      const cumulativeCode = []
+      for (let c of orderedCells) {
+        if (c.type === 'code') {
+          cumulativeCode.push(c.content)
+        }
+        if (c.id === cell.id) {
+          break
+        }
+      }
+
+      return cumulativeCode
+    }
+  })
+
+  console.log(cumulativeCode)
 
   useEffect(() => {
     if (!bundle) {
