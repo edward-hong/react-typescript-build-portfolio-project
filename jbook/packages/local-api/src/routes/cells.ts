@@ -13,7 +13,18 @@ export const createCellsRouter = (filename: string, dir: string) => {
 
   const fullPath = path.join(dir, filename)
 
-  router.get('/cells', async (req, res) => {})
+  router.get('/cells', async (req, res) => {
+    try {
+      const result = await fs.readFile(fullPath, { encoding: 'utf-8' })
+
+      res.send(JSON.parse(result))
+    } catch (err) {
+      if (err.code === 'ENOENT') {
+      } else {
+        throw err
+      }
+    }
+  })
 
   router.post('/cells', async (req, res) => {
     const { cells }: { cells: Cell[] } = req.body
