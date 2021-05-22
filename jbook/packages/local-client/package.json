@@ -1,8 +1,13 @@
 {
   "name": "@jsnote-eh/local-client",
   "version": "0.1.0",
-  "private": true,
-  "dependencies": {
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "build"
+  ],
+  "devDependencies": {
     "@babel/parser": "^7.14.1",
     "@babel/traverse": "^7.14.0",
     "@fortawesome/fontawesome-free": "^5.15.3",
