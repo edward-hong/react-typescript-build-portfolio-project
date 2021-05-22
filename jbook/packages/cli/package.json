@@ -4,11 +4,12 @@
   "description": "",
   "scripts": {
     "start": "tsc --watch --preserveWatchOutput",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepublishOnly": "tsc"
   },
   "files": [
     "dist"
   ],
+  "bin": "dist/index.js",
   "publishConfig": {
     "access": "public"
   },
