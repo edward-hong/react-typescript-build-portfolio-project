@@ -1,6 +1,6 @@
 import path from 'path'
 import { Command } from 'commander'
-import { serve } from 'local-api'
+import { serve } from '@jsnote-eh/local-api'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
